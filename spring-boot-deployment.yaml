@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-scheduling-shedlock-neo4j-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo-scheduling-shedlock-neo4j
+  template:
+    metadata:
+      labels:
+        app: demo-scheduling-shedlock-neo4j
+    spec:
+      containers:
+        - name: demo-scheduling-shedlock-neo4j
+          image: demo-scheduling-shedlock-neo4j
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Never
+          env:
+            - name: NEO4J_SERVICE
+              value: my-neo4j-service
+            - name: NEO4J_USER
+              value: neo4j
+            - name: NEO4J_PASSWORD
+              value: "12345678"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-scheduling-shedlock-neo4j-service
+spec:
+  selector:
+    app: demo-scheduling-shedlock-neo4j
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer

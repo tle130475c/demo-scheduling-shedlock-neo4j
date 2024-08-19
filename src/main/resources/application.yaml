@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: demo-scheduling-shedlock-neo4j
+  neo4j:
+    uri: bolt://${NEO4J_SERVICE}:7687
+    authentication:
+      username: ${NEO4J_USER}
+      password: ${NEO4J_PASSWORD}
+logging:
+  level:
+    "[net.javacrumbs.shedlock]": DEBUG
